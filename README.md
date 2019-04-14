@@ -12,32 +12,32 @@ But when I just want to make a simple React app, and I need a global store (whic
 
 The package exports a single function « createStore » which takes at least two arguments « initialState » and « actions ».
 
-* `initialState` has to be an object, but can be empty. It’s your initial state for your global store
+-   `initialState` has to be an object, but can be empty. It’s your initial state for your global store
 
-* `actions` has to be an object, but can be empty. This is where you’ll put your logic to update the store
+-   `actions` has to be an object, but can be empty. This is where you’ll put your logic to update the store
 
 ```js
 // An object representing your initial state
 const initialState = {
-	todo: [
-		{
-			task: "Finish this project",
-			completed: false
-		}
-	]
+  todo: [
+    {
+      task: "Finish this project",
+      completed: false
+    }
+  ]
 }
 
 // An object where each key is a method
 const reducers = {
-	addToDo: (store, [task]) => {
-		store.todo.push(task)
-	},
-	toggleTodoState: (store, [task]) => {
-		store.todo[task].completed = !store.todo[task].completed
-	},
-	deleteToDo: (store, [task]) => {
-		store.todo.splice(task, 1)
-	}
+  addToDo: (store, [task]) => {
+    store.todo.push(task)
+  },
+  toggleTodoState: (store, [task]) => {
+    store.todo[task].completed = !store.todo[task].completed
+  },
+  deleteToDo: (store, [task]) => {
+    store.todo.splice(task, 1)
+  }
 }
 ```
 
@@ -45,19 +45,19 @@ const reducers = {
 
 ```js
 const initialState = {
-	todo: []
+  todo: []
 }
 
 const reducers = {
-	addToDo: (store, [task, completed]) => {
-		store.todo.push({
-				task: task,
-				completed: completed
-			})
-	},
-	toggleTodoState: (store, [task]) => {
-		store.todo[task].completed = !store.todo[task].completed
-	}
+  addToDo: (store, [task, completed]) => {
+    store.todo.push({
+      task: task,
+      completed: completed
+    })
+  },
+  toggleTodoState: (store, [task]) => {
+    store.todo[task].completed = !store.todo[task].completed
+  }
 }
 
 // Create the store and the actions
@@ -71,24 +71,24 @@ console.log(store.todo)
 
 // Use in React
 const Component = () => (
-	<>
-		<h1>To do list</h1>
-			<Consumer inject="todo">
-				{({ todo }) => (
-					<ul>
-						{todo.map((t, i) => (
-							<li
-								key={i}
-								style={{ color: t.completed ? "red" : "green" }}
-								onClick={() => actions.toggleTodoState(i)}
-							>
-								{t.task}
-							</li>
-						))}
-					</ul>
-				)}
-			</Consumer>
-	</>
+  <>
+    <h1>To do list</h1>
+    <Consumer inject="todo">
+      {({ todo }) => (
+        <ul>
+          {todo.map((t, i) => (
+            <li
+              key={i}
+              style={{ color: t.completed ? "red" : "green" }}
+              onClick={() => actions.toggleTodoState(i)}
+            >
+              {t.task}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Consumer>
+  </>
 )
 ```
 
@@ -108,115 +108,114 @@ import { createStore } from "@coriou/react-easy-store"
 
 // Your initial store
 const initialState = {
-	todo: [
-		{
-			task: "Finish this project",
-			completed: false
-		},
-		{
-			task: "Write a readme",
-			completed: true
-		}
-	]
+  todo: [
+    {
+      task: "Finish this project",
+      completed: false
+    },
+    {
+      task: "Write a readme",
+      completed: true
+    }
+  ]
 }
 
-// The « actions » / « reducers » 
+// The « actions » / « reducers »
 const reducers = {
-	addToDo: (store, [task]) => {
-		store.todo.push(task)
-	},
-	toggleTodoState: (store, [task]) => {
-		store.todo[task].completed = !store.todo[task].completed
-	},
-	deleteToDo: (store, [task]) => {
-		store.todo.splice(task, 1)
-	}
+  addToDo: (store, [task]) => {
+    store.todo.push(task)
+  },
+  toggleTodoState: (store, [task]) => {
+    store.todo[task].completed = !store.todo[task].completed
+  },
+  deleteToDo: (store, [task]) => {
+    store.todo.splice(task, 1)
+  }
 }
 
 const { Consumer, actions } = createStore(initialState, reducers)
 
 // Your app
 const App = () => (
-	<>
-			<h1>React Easy Store</h1>
+  <>
+    <h1>React Easy Store</h1>
 
-			{/** Listening to all store changes */}
-			<Consumer>
-				{store => {
-					return <pre>{JSON.stringify(store, null, 2)}</pre>
-				}}
-			</Consumer>
+    {/** Listening to all store changes */}
+    <Consumer>
+      {store => {
+        return <pre>{JSON.stringify(store, null, 2)}</pre>
+      }}
+    </Consumer>
 
+    <hr />
 
-			<hr />
+    {/** Listening only to "todo" changes */}
+    <Consumer inject="todo">
+      {({ todo }) => {
+        if (!todo.length) return null
 
-			{/** Listening only to "todo" changes */}
-			<Consumer inject="todo">
-				{({ todo }) => {
-					if (!todo.length) return null
+        return (
+          <>
+            <h4>Todo list:</h4>
+            <ul>
+              {todo.map((td, i) => (
+                <li key={i}>
+                  <span
+                    onClick={() =>
+                      actions.toggleTodoState(i)
+                    }
+                    style={{
+                      color: td.completed
+                        ? "green"
+                        : "red",
+                      textDecoration: td.completed
+                        ? "line-through"
+                        : "none",
+                      cursor: "pointer"
+                    }}
+                  >
+                    {i} - {td.task}
+                  </span>
+                  <span
+                    style={{
+                      display: "block",
+                      color: "#BABABA",
+                      fontSize: "60%"
+                    }}
+                  >
+                    Status:{" "}
+                    {td.completed ? "Done" : "To do"}
+                  </span>
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: "60%"
+                    }}
+                  >
+                    <a
+                      href="#"
+                      onClick={() =>
+                        actions.deleteToDo(i)
+                      }
+                    >
+                      Delete
+                    </a>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }}
+    </Consumer>
 
-					return (
-						<>
-							<h4>Todo list:</h4>
-							<ul>
-								{todo.map((td, i) => (
-									<li key={i}>
-										<span
-											onClick={() =>
-												actions.toggleTodoState(i)
-											}
-											style={{
-												color: td.completed
-													? "green"
-													: "red",
-												textDecoration: td.completed
-													? "line-through"
-													: "none",
-												cursor: "pointer"
-											}}
-										>
-											{i} - {td.task}
-										</span>
-										<span
-											style={{
-												display: "block",
-												color: "#BABABA",
-												fontSize: "60%"
-											}}
-										>
-											Status:{" "}
-											{td.completed ? "Done" : "To do"}
-										</span>
-										<span
-											style={{
-												display: "block",
-												fontSize: "60%"
-											}}
-										>
-											<a
-												href="#"
-												onClick={() =>
-													actions.deleteToDo(i)
-												}
-											>
-												Delete
-											</a>
-										</span>
-									</li>
-								))}
-							</ul>
-						</>
-					)
-				}}
-			</Consumer>
-
-			<input
-				type="text"
-				placeholder="Add todo"
-				onChange={e => (newToDo = e.target.value)}
-				ref={inputElement}
-			/>
-			<button onClick={add}>Add to list</button>
-	</>
+    <input
+      type="text"
+      placeholder="Add todo"
+      onChange={e => (newToDo = e.target.value)}
+      ref={inputElement}
+    />
+    <button onClick={add}>Add to list</button>
+  </>
 )
 ```
