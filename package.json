@@ -1,0 +1,36 @@
+{
+	"name": "react-easy-store",
+	"version": "0.0.1",
+	"main": "dist/main.js",
+	"repository": "Coriou/react-easy-store.git",
+	"author": "Benjamin Coriou",
+	"license": "MIT",
+	"private": false,
+	"browserslist": "> 0.25%, not dead, IE 9",
+	"scripts": {
+		"dev": "parcel index.html",
+		"build": "make-dir dist && rimraf dist/* && yarn babel src/index.js --out-file dist/main.js --presets=@babel/env,@babel/react,minify --source-maps --no-comments",
+		"analyze": "yarn build && bundlesize -f 'dist/*.js'",
+		"deploy": "yarn analyze && yarn publish --access public"
+	},
+	"peerDependencies": {
+		"mobx": ">=4",
+		"react": ">=16.8.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.4.3",
+		"@babel/core": "^7.4.3",
+		"@babel/preset-env": "^7.4.3",
+		"@babel/preset-react": "^7.0.0",
+		"babel-preset-minify": "^0.5.0",
+		"bundlesize": "^0.17.1",
+		"make-dir-cli": "^2.0.0",
+		"mobx": "^5.9.4",
+		"parcel-bundler": "^1.12.3",
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6",
+		"rimraf": "^2.6.3",
+		"source-map-explorer": "^1.8.0"
+	},
+	"dependencies": {}
+}
