@@ -44,6 +44,9 @@ const reducers = {
 ### Usage
 
 ```js
+import React from "react"
+import { createStore } from "@coriou/react-easy-store"
+
 const initialState = {
   todo: []
 }
