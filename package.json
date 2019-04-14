@@ -1,5 +1,5 @@
 {
-	"name": "react-easy-store",
+	"name": "@coriou/react-easy-store",
 	"version": "0.0.1",
 	"main": "dist/main.js",
 	"repository": "Coriou/react-easy-store.git",
