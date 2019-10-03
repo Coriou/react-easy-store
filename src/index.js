@@ -61,7 +61,7 @@ const createStore = (initialState, actions, options = {}) => {
 			})
 
 			return disposer
-		}, inject)
+		}, [inject])
 
 		// If I render "<Component..." instead of "<Children...", React creates a new component on each render
 		const Component = memo(props => <Children {...props} />)
