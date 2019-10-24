@@ -2,7 +2,7 @@
 
 <p align="center">
 	<img alt="travis" src="https://img.shields.io/travis/coriou/react-easy-store?style=flat-square"/>
-	<img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@coriou/react-easy-store">
+	<img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@coriou/react-easy-store?style=flat-square">
 </p>
 
 A dead simple wrapper around MobX to easily create and maintain a simple global store
