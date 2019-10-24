@@ -1,8 +1,8 @@
 # React Easy Store
 
 <p align="center">
-![Travis (.org)](https://img.shields.io/travis/coriou/react-easy-store?style=flat-square)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/@coriou/react-easy-store)
+	<img alt="travis" src="https://img.shields.io/travis/coriou/react-easy-store?style=flat-square"/>
+	<img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@coriou/react-easy-store">
 </p>
 
 A dead simple wrapper around MobX to easily create and maintain a simple global store
