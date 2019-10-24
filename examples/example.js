@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { render } from "react-dom"
-import { createStore } from "./index"
+import { createStore } from "../src/index"
 
 const initialState = {
 	todo: [
