@@ -2,3 +2,8 @@
 src/
 index.html
 .prettierrc
+examples/
+build/
+.eslintrc.js
+.nvmrc
+.travis.yml
