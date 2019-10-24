@@ -12,6 +12,7 @@
 		"build": "make-dir dist && rimraf dist/* && yarn babel src/index.js --out-file dist/main.js --presets=@babel/env,@babel/react,minify --source-maps --no-comments",
 		"analyze": "yarn build && bundlesize -f 'dist/*.js'",
 		"deploy": "yarn analyze && yarn publish --access public",
+		"build:example": "parcel build ./examples/index.html --out-dir build",
 		"lint": "eslint --ext .js src"
 	},
 	"peerDependencies": {
