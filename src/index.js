@@ -10,7 +10,7 @@ const createStore = (initialState, actions, options = {}) => {
 	if (typeof options === "object")
 		options = Object.assign({}, defaultOptions, options)
 
-	const store = observable(initialState)
+	const store = observable.object(initialState)
 
 	const reactiveActions = {}
 	// Make actions, well, actions
@@ -36,7 +36,7 @@ const createStore = (initialState, actions, options = {}) => {
 			injected.current[0] === "*" ||
 			injected.current[0] === undefined
 		)
-			injected.current = Object.keys(store)
+			injected.current = Reflect.ownKeys(store)
 
 		// Returns the elements in the store we have injected in the component
 		const generateStoreSubset = useCallback(() => {
@@ -45,10 +45,10 @@ const createStore = (initialState, actions, options = {}) => {
 				injected.current[0] === "*" ||
 				injected.current[0] === undefined
 			)
-				injected.current = Object.keys(store)
+				injected.current = Reflect.ownKeys(store)
 
 			return injected.current
-				.filter(v => Object.keys(store).includes(v))
+				.filter(v => Reflect.ownKeys(store).includes(v))
 				.reduce((obj, key) => {
 					obj[key] = store[key]
 					return obj
@@ -77,7 +77,12 @@ const createStore = (initialState, actions, options = {}) => {
 		// If I render "<Component..." instead of "<Children...", React creates a new component on each render
 		// const Component = memo(props => <Children {...props} />)
 
-		return <Children key={injected.current.join(",")} {...state} />
+		return (
+			<Children
+				key={Object.keys(injected.current).join(",")}
+				{...state}
+			/>
+		)
 	}
 
 	Consumer.propTypes = {
