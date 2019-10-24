@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import { observable, action, toJS, autorun } from "mobx"
 import PropTypes from "prop-types"
 
@@ -26,25 +26,34 @@ const createStore = (initialState, actions, options = {}) => {
 
 	const Consumer = ({ children: Children, inject = [] }) => {
 		inject = useRef(inject)
-		let injected = inject.current
-		if (!Array.isArray(injected)) injected = [injected] // TODO: Better type check
+		let injected = useRef(inject.current)
+		if (!Array.isArray(injected.current))
+			injected.current = [injected.current] // TODO: Better type check
 
 		// Inject all store if not provided
-		if (!injected.length || injected[0] === "*" || injected[0] === undefined)
-			injected = Object.keys(store)
+		if (
+			!injected.current.length ||
+			injected.current[0] === "*" ||
+			injected.current[0] === undefined
+		)
+			injected.current = Object.keys(store)
 
 		// Returns the elements in the store we have injected in the component
-		const generateStoreSubset = () => {
-			if (!injected.length || injected[0] === "*" || injected[0] === undefined)
-				injected = Object.keys(store)
+		const generateStoreSubset = useCallback(() => {
+			if (
+				!injected.current.length ||
+				injected.current[0] === "*" ||
+				injected.current[0] === undefined
+			)
+				injected.current = Object.keys(store)
 
-			return injected
+			return injected.current
 				.filter(v => Object.keys(store).includes(v))
 				.reduce((obj, key) => {
 					obj[key] = store[key]
 					return obj
 				}, {})
-		}
+		}, [injected])
 
 		// Bind the watched keys to component's state
 		const [state, setState] = useState(generateStoreSubset())
@@ -55,7 +64,7 @@ const createStore = (initialState, actions, options = {}) => {
 
 			const disposer = autorun(() => {
 				// Populating this just so MobX will watch those and the autorun function will run when they get updated
-				injected.forEach(k => {
+				injected.current.forEach(k => {
 					newState[k] = toJS(store[k])
 				})
 
@@ -63,12 +72,12 @@ const createStore = (initialState, actions, options = {}) => {
 			})
 
 			return disposer
-		}, [inject])
+		}, [inject, generateStoreSubset, injected])
 
 		// If I render "<Component..." instead of "<Children...", React creates a new component on each render
 		// const Component = memo(props => <Children {...props} />)
 
-		return <Children key={injected.join(",")} {...state} />
+		return <Children key={injected.current.join(",")} {...state} />
 	}
 
 	Consumer.propTypes = {
