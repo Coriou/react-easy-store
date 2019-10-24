@@ -1,6 +1,7 @@
 # React Easy Store
 
 <p align="center">
+	<img alt="npm" src="https://img.shields.io/npm/v/@coriou/react-easy-store?style=flat-square">
 	<img alt="travis" src="https://img.shields.io/travis/coriou/react-easy-store?style=flat-square"/>
 	<img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@coriou/react-easy-store?style=flat-square">
 </p>
