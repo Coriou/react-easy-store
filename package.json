@@ -11,7 +11,8 @@
 		"dev": "parcel ./examples/index.html",
 		"build": "make-dir dist && rimraf dist/* && yarn babel src/index.js --out-file dist/main.js --presets=@babel/env,@babel/react,minify --source-maps --no-comments",
 		"analyze": "yarn build && bundlesize -f 'dist/*.js'",
-		"deploy": "yarn analyze && yarn publish --access public"
+		"deploy": "yarn analyze && yarn publish --access public",
+		"lint": "eslint --ext .js src"
 	},
 	"peerDependencies": {
 		"mobx": ">=4",
@@ -24,6 +25,10 @@
 		"@babel/preset-react": "^7.0.0",
 		"babel-preset-minify": "^0.5.0",
 		"bundlesize": "^0.17.1",
+		"babel-eslint": "^10.0.3",
+		"eslint": "^6.5.1",
+		"eslint-plugin-react": "^7.16.0",
+		"eslint-plugin-react-hooks": "^2.2.0",
 		"make-dir-cli": "^2.0.0",
 		"mobx": "^5.9.4",
 		"parcel-bundler": "^1.12.3",
