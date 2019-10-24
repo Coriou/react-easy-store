@@ -1,5 +1,6 @@
-import React, { useState, useEffect, memo } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { observable, action, toJS, autorun } from "mobx"
+import PropTypes from "prop-types"
 
 const createStore = (initialState, actions, options = {}) => {
 	const defaultOptions = {
@@ -24,16 +25,17 @@ const createStore = (initialState, actions, options = {}) => {
 		})
 
 	const Consumer = ({ children: Children, inject = [] }) => {
-		let injected = inject
+		inject = useRef(inject)
+		let injected = inject.current
 		if (!Array.isArray(injected)) injected = [injected] // TODO: Better type check
 
 		// Inject all store if not provided
-		if (!inject.length || inject[0] === "*" || inject[0] === undefined)
+		if (!injected.length || injected[0] === "*" || injected[0] === undefined)
 			injected = Object.keys(store)
 
 		// Returns the elements in the store we have injected in the component
 		const generateStoreSubset = () => {
-			if (!inject.length || inject[0] === "*" || inject[0] === undefined)
+			if (!injected.length || injected[0] === "*" || injected[0] === undefined)
 				injected = Object.keys(store)
 
 			return injected
@@ -64,9 +66,17 @@ const createStore = (initialState, actions, options = {}) => {
 		}, [inject])
 
 		// If I render "<Component..." instead of "<Children...", React creates a new component on each render
-		const Component = memo(props => <Children {...props} />)
+		// const Component = memo(props => <Children {...props} />)
 
 		return <Children key={injected.join(",")} {...state} />
+	}
+
+	Consumer.propTypes = {
+		children: PropTypes.oneOfType([
+			PropTypes.node.isRequired,
+			PropTypes.func
+		]),
+		inject: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 	}
 
 	return { store, Consumer, actions: reactiveActions }
