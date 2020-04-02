@@ -20,24 +20,24 @@
 		"react": ">=16.8.0"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.6.4",
-		"@babel/core": "^7.6.4",
-		"@babel/preset-env": "^7.6.3",
-		"@babel/preset-react": "^7.6.3",
-		"babel-eslint": "^10.0.3",
+		"@babel/cli": "^7.8.4",
+		"@babel/core": "^7.9.0",
+		"@babel/preset-env": "^7.9.0",
+		"@babel/preset-react": "^7.9.4",
+		"babel-eslint": "^10.1.0",
 		"babel-preset-minify": "^0.5.1",
 		"bundlesize": "^0.18.0",
-		"eslint": "^6.5.1",
-		"eslint-plugin-react": "^7.16.0",
-		"eslint-plugin-react-hooks": "^2.2.0",
+		"eslint": "^6.8.0",
+		"eslint-plugin-react": "^7.19.0",
+		"eslint-plugin-react-hooks": "^3.0.0",
 		"make-dir-cli": "^2.0.0",
-		"mobx": "^5.14.2",
+		"mobx": "^5.15.4",
 		"parcel-bundler": "^1.12.4",
 		"prop-types": "^15.7.2",
-		"react": "^16.11.0",
-		"react-dom": "^16.11.0",
-		"rimraf": "^3.0.0",
-		"source-map-explorer": "^2.1.0"
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"rimraf": "^3.0.2",
+		"source-map-explorer": "^2.4.2"
 	},
 	"dependencies": {}
 }
