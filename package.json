@@ -9,7 +9,7 @@
 	"browserslist": "> 0.25%, not dead, IE 9",
 	"scripts": {
 		"dev": "parcel ./examples/index.html",
-		"build": "make-dir dist && rimraf dist/* && yarn babel src/index.js --out-file dist/main.js --presets=@babel/env,@babel/react,minify --source-maps --no-comments",
+		"build": "make-dir dist && rimraf dist/* && yarn babel src/index.js --out-file dist/main.js --presets=@babel/env,@babel/react,minify --no-comments",
 		"analyze": "yarn build && bundlesize -f 'dist/*.js'",
 		"deploy": "yarn analyze && yarn publish --access public",
 		"build:example": "parcel build ./examples/index.html --out-dir build --public-url https://coriou.github.io/react-easy-store/",
